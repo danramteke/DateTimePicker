@@ -10,6 +10,7 @@ import UIKit
 
 public protocol DateTimePickerDelegate: class {
     func dateTimePicker(_ picker: DateTimePicker, didSelectDate: Date)
+    func dateTimePickerDidCancel(_ picker: DateTimePicker)
 }
 
 @objc public class DateTimePicker: UIView {
@@ -329,7 +330,7 @@ public protocol DateTimePickerDelegate: class {
         cancelButton.setTitle(cancelButtonTitle, for: .normal)
         cancelButton.setTitleColor(darkColor.withAlphaComponent(0.5), for: .normal)
         cancelButton.contentHorizontalAlignment = .left
-        cancelButton.addTarget(self, action: #selector(DateTimePicker.dismissView(sender:)), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(DateTimePicker.cancelButtonTapped(sender:)), for: .touchUpInside)
         cancelButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         titleView.addSubview(cancelButton)
         
@@ -558,7 +559,12 @@ public protocol DateTimePickerDelegate: class {
 		layoutIfNeeded()
         resetTime()
     }
-    
+
+    @objc
+    func cancelButtonTapped(sender: UIButton?) {
+        delegate?.dateTimePickerDidCancel(self)
+        self.dismissView(sender: sender)
+    }
     
     @objc
     func setToday() {

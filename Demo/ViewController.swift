@@ -9,6 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController, DateTimePickerDelegate {
+    func dateTimePickerDidCancel(_ picker: DateTimePicker) {
+        print("did Cancel")
+    }
+
     
     @IBAction func showDateTimePicker(sender: AnyObject) {
         let min = Date().addingTimeInterval(-60 * 60 * 24 * 4)
